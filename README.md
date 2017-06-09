@@ -19,6 +19,8 @@ If ROOT is not located in the system path, it can be set by `./configure --with-
 
 ## Usage
 
+* LHEF
+
 ``` c++
 #include <fstream>
 #include <iostream>
@@ -34,6 +36,27 @@ int main(int, char *argv[]) {
     }
 }
 ```
+
+* LHCO
+
+``` c++
+#include <fstream>
+#include <iostream>
+#include "lhco/lhco.h"
+
+int main(int, char *argv[]) {
+    std::ifstream fin(argv[1]);
+    auto event = lhco::parseEvent(&fin);
+    for (int ieve = 1; !event.done(); event = lhco::parseEvent(&fin), ++ieve) {
+        std::cout << "-- event : " << ieve << '\n';
+        std::cout << event.show() << '\n'
+                  << "missing energy = " << lhco::missingET(event) << '\n';
+    }
+}
+```
+
+See also `test_parser_@(lhco|lhef).cc` and `test_render_@(lhco|lhef).cc` in [`src`](src).
+
 
 Setting flags might be necessary for building your programs. For example,
 
