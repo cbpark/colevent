@@ -43,6 +43,12 @@ CXXFLAGS += -I$(COLEVENT)/include/colevent
 LDFLAGS  += -L$(COLEVENT)/lib -lcolevent
 ```
 
+If it has been installed to the system path, `pkg-config` will provide the proper flags:
+
+```
+pkg-config --cflags --libs colevent
+```
+
 ## References
 
 - [A standard format for Les Houches Event Files](http://arxiv.org/abs/hep-ph/0609017).
