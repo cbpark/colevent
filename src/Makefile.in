@@ -93,7 +93,8 @@ host_triplet = @host@
 @DEBUG_TRUE@am__append_1 = -DDEBUG -O0 -Wall -Wextra -pedantic
 @USE_ROOT_TRUE@am__append_2 = $(ROOTCFLAGS)
 @DEBUG_TRUE@noinst_bin_PROGRAMS = test_parse_lhef$(EXEEXT) \
-@DEBUG_TRUE@	test_render_lhef$(EXEEXT)
+@DEBUG_TRUE@	test_render_lhef$(EXEEXT) test_parse_lhco$(EXEEXT) \
+@DEBUG_TRUE@	test_render_lhco$(EXEEXT)
 @DEBUG_TRUE@@USE_ROOT_TRUE@am__append_3 = -L$(ROOTLIBDIR) $(ROOTLIBS)
 @DEBUG_TRUE@@USE_ROOT_TRUE@am__append_4 = -L$(ROOTLIBDIR) $(ROOTLIBS)
 subdir = src
@@ -145,19 +146,28 @@ am__DEPENDENCIES_1 =
 @USE_ROOT_TRUE@libcolevent_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_libcolevent_la_OBJECTS = kinematics.lo lhef/event.lo lhef/lhef.lo \
-	lhef/parser.lo lhef/particle.lo
+	lhef/parser.lo lhef/particle.lo lhco/event.lo lhco/lhco.lo \
+	lhco/object.lo lhco/parser.lo lhco/particle.lo
 libcolevent_la_OBJECTS = $(am_libcolevent_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
 PROGRAMS = $(noinst_bin_PROGRAMS)
+am__test_parse_lhco_SOURCES_DIST = test_parse_lhco.cc
+@DEBUG_TRUE@am_test_parse_lhco_OBJECTS = test_parse_lhco.$(OBJEXT)
+test_parse_lhco_OBJECTS = $(am_test_parse_lhco_OBJECTS)
+@DEBUG_TRUE@test_parse_lhco_DEPENDENCIES = libcolevent.la
 am__test_parse_lhef_SOURCES_DIST = test_parse_lhef.cc
 @DEBUG_TRUE@am_test_parse_lhef_OBJECTS = test_parse_lhef.$(OBJEXT)
 test_parse_lhef_OBJECTS = $(am_test_parse_lhef_OBJECTS)
 @DEBUG_TRUE@@USE_ROOT_TRUE@am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1)
 @DEBUG_TRUE@test_parse_lhef_DEPENDENCIES = libcolevent.la \
 @DEBUG_TRUE@	$(am__DEPENDENCIES_2)
+am__test_render_lhco_SOURCES_DIST = test_render_lhco.cc
+@DEBUG_TRUE@am_test_render_lhco_OBJECTS = test_render_lhco.$(OBJEXT)
+test_render_lhco_OBJECTS = $(am_test_render_lhco_OBJECTS)
+@DEBUG_TRUE@test_render_lhco_DEPENDENCIES = libcolevent.la
 am__test_render_lhef_SOURCES_DIST = test_render_lhef.cc
 @DEBUG_TRUE@am_test_render_lhef_OBJECTS = test_render_lhef.$(OBJEXT)
 test_render_lhef_OBJECTS = $(am_test_render_lhef_OBJECTS)
@@ -197,10 +207,13 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(libcolevent_la_SOURCES) $(test_parse_lhef_SOURCES) \
+SOURCES = $(libcolevent_la_SOURCES) $(test_parse_lhco_SOURCES) \
+	$(test_parse_lhef_SOURCES) $(test_render_lhco_SOURCES) \
 	$(test_render_lhef_SOURCES)
 DIST_SOURCES = $(libcolevent_la_SOURCES) \
+	$(am__test_parse_lhco_SOURCES_DIST) \
 	$(am__test_parse_lhef_SOURCES_DIST) \
+	$(am__test_render_lhco_SOURCES_DIST) \
 	$(am__test_render_lhef_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
@@ -368,18 +381,24 @@ AM_CXXFLAGS = -std=c++11 $(am__append_1) $(am__append_2)
 lib_LTLIBRARIES = libcolevent.la
 libcolevent_la_SOURCES = \
 	kinematics.cc \
-	lhef/event.cc lhef/lhef.cc lhef/parser.cc lhef/particle.cc
+	lhef/event.cc lhef/lhef.cc lhef/parser.cc lhef/particle.cc \
+	lhco/event.cc lhco/lhco.cc lhco/object.cc lhco/parser.cc lhco/particle.cc
 
 @USE_ROOT_TRUE@libcolevent_la_LIBADD = -L$(ROOTLIBDIR) $(ROOTLIBS)
 nobase_pkginclude_HEADERS = \
 	constants.h kinematics.h \
-	lhef/event.h lhef/lhef.h lhef/parser.h lhef/particle.h lhef/pid.h
+	lhef/event.h lhef/lhef.h lhef/parser.h lhef/particle.h lhef/pid.h \
+	lhco/event.h lhco/lhco.h lhco/object.h lhco/parser.h lhco/particle.h
 
 @DEBUG_TRUE@noinst_bindir = $(abs_top_builddir)/src
 @DEBUG_TRUE@test_parse_lhef_SOURCES = test_parse_lhef.cc
 @DEBUG_TRUE@test_parse_lhef_LDADD = libcolevent.la $(am__append_3)
 @DEBUG_TRUE@test_render_lhef_SOURCES = test_render_lhef.cc
 @DEBUG_TRUE@test_render_lhef_LDADD = libcolevent.la $(am__append_4)
+@DEBUG_TRUE@test_parse_lhco_SOURCES = test_parse_lhco.cc
+@DEBUG_TRUE@test_parse_lhco_LDADD = libcolevent.la
+@DEBUG_TRUE@test_render_lhco_SOURCES = test_render_lhco.cc
+@DEBUG_TRUE@test_render_lhco_LDADD = libcolevent.la
 all: all-am
 
 .SUFFIXES:
@@ -458,6 +477,17 @@ lhef/event.lo: lhef/$(am__dirstamp) lhef/$(DEPDIR)/$(am__dirstamp)
 lhef/lhef.lo: lhef/$(am__dirstamp) lhef/$(DEPDIR)/$(am__dirstamp)
 lhef/parser.lo: lhef/$(am__dirstamp) lhef/$(DEPDIR)/$(am__dirstamp)
 lhef/particle.lo: lhef/$(am__dirstamp) lhef/$(DEPDIR)/$(am__dirstamp)
+lhco/$(am__dirstamp):
+	@$(MKDIR_P) lhco
+	@: > lhco/$(am__dirstamp)
+lhco/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) lhco/$(DEPDIR)
+	@: > lhco/$(DEPDIR)/$(am__dirstamp)
+lhco/event.lo: lhco/$(am__dirstamp) lhco/$(DEPDIR)/$(am__dirstamp)
+lhco/lhco.lo: lhco/$(am__dirstamp) lhco/$(DEPDIR)/$(am__dirstamp)
+lhco/object.lo: lhco/$(am__dirstamp) lhco/$(DEPDIR)/$(am__dirstamp)
+lhco/parser.lo: lhco/$(am__dirstamp) lhco/$(DEPDIR)/$(am__dirstamp)
+lhco/particle.lo: lhco/$(am__dirstamp) lhco/$(DEPDIR)/$(am__dirstamp)
 
 libcolevent.la: $(libcolevent_la_OBJECTS) $(libcolevent_la_DEPENDENCIES) $(EXTRA_libcolevent_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(CXXLINK) -rpath $(libdir) $(libcolevent_la_OBJECTS) $(libcolevent_la_LIBADD) $(LIBS)
@@ -511,9 +541,17 @@ clean-noinst_binPROGRAMS:
 	echo " rm -f" $$list; \
 	rm -f $$list
 
+test_parse_lhco$(EXEEXT): $(test_parse_lhco_OBJECTS) $(test_parse_lhco_DEPENDENCIES) $(EXTRA_test_parse_lhco_DEPENDENCIES) 
+	@rm -f test_parse_lhco$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_parse_lhco_OBJECTS) $(test_parse_lhco_LDADD) $(LIBS)
+
 test_parse_lhef$(EXEEXT): $(test_parse_lhef_OBJECTS) $(test_parse_lhef_DEPENDENCIES) $(EXTRA_test_parse_lhef_DEPENDENCIES) 
 	@rm -f test_parse_lhef$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(test_parse_lhef_OBJECTS) $(test_parse_lhef_LDADD) $(LIBS)
+
+test_render_lhco$(EXEEXT): $(test_render_lhco_OBJECTS) $(test_render_lhco_DEPENDENCIES) $(EXTRA_test_render_lhco_DEPENDENCIES) 
+	@rm -f test_render_lhco$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(test_render_lhco_OBJECTS) $(test_render_lhco_LDADD) $(LIBS)
 
 test_render_lhef$(EXEEXT): $(test_render_lhef_OBJECTS) $(test_render_lhef_DEPENDENCIES) $(EXTRA_test_render_lhef_DEPENDENCIES) 
 	@rm -f test_render_lhef$(EXEEXT)
@@ -521,6 +559,8 @@ test_render_lhef$(EXEEXT): $(test_render_lhef_OBJECTS) $(test_render_lhef_DEPEND
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f lhco/*.$(OBJEXT)
+	-rm -f lhco/*.lo
 	-rm -f lhef/*.$(OBJEXT)
 	-rm -f lhef/*.lo
 
@@ -528,8 +568,15 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kinematics.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_parse_lhco.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_parse_lhef.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_render_lhco.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_render_lhef.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@lhco/$(DEPDIR)/event.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@lhco/$(DEPDIR)/lhco.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@lhco/$(DEPDIR)/object.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@lhco/$(DEPDIR)/parser.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@lhco/$(DEPDIR)/particle.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@lhef/$(DEPDIR)/event.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@lhef/$(DEPDIR)/lhef.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@lhef/$(DEPDIR)/parser.Plo@am__quote@
@@ -564,6 +611,7 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+	-rm -rf lhco/.libs lhco/_libs
 	-rm -rf lhef/.libs lhef/_libs
 install-nobase_pkgincludeHEADERS: $(nobase_pkginclude_HEADERS)
 	@$(NORMAL_INSTALL)
@@ -705,6 +753,8 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-rm -f lhco/$(DEPDIR)/$(am__dirstamp)
+	-rm -f lhco/$(am__dirstamp)
 	-rm -f lhef/$(DEPDIR)/$(am__dirstamp)
 	-rm -f lhef/$(am__dirstamp)
 
@@ -717,7 +767,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 	clean-noinst_binPROGRAMS mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR) lhef/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) lhco/$(DEPDIR) lhef/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -764,7 +814,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR) lhef/$(DEPDIR)
+	-rm -rf ./$(DEPDIR) lhco/$(DEPDIR) lhef/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
