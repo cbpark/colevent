@@ -35,6 +35,34 @@ double cosTheta(const Px &px, const Py &py, const Pz &pz);
 
 double pseudoRapidity(const Px &px, const Py &py, const Pz &pz);
 
+struct Pt {
+    double value;
+    Pt() : value(0.0) {}
+    explicit Pt(double v) : value(v) {}
+    Pt(const Px &px, const Py &py) { value = std::hypot(px.value, py.value); }
+};
+
+struct Eta {
+    double value;
+    Eta() : value(0.0) {}
+    explicit Eta(double v) : value(v) {}
+    Eta(const Px &px, const Py &py, const Pz &pz)
+        : value(pseudoRapidity(px, py, pz)) {}
+};
+
+struct Phi {
+    double value;
+    Phi() : value(0.0) {}
+    explicit Phi(double v) : value(v) {}
+    Phi(const Px &px, const Py &py) : value(std::atan2(py.value, px.value)) {}
+};
+
+struct Mass {
+    double value;
+    Mass() : value(0.0) {}
+    explicit Mass(double v) : value(v) {}
+};
+
 class FourMomentum {
 private:
     Px px_;
