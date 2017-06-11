@@ -6,6 +6,7 @@
 #include <numeric>
 #include <string>
 #include "kinematics.h"
+#include "lester_mt2_bisect.h"
 
 using std::string;
 using std::to_string;
@@ -83,6 +84,18 @@ double deltaPhi(const Particle &p1, const Particle &p2) {
 double deltaR(const Particle &p1, const Particle &p2) {
     FourMomentum v1 = momentum(p1), v2 = momentum(p2);
     return deltaR(v1, v2);
+}
+
+double mT2(const Particle &p1, const Particle &p2, const double kx,
+           const double ky, const double m_inv1, const double m_inv2,
+           bool print_copyright) {
+    FourMomentum v1 = momentum(p1), v2 = momentum(p2);
+    if (!print_copyright) {
+        asymm_mt2_lester_bisect::disableCopyrightMessage();
+    }
+    return asymm_mt2_lester_bisect::get_mT2(v1.mass(), v1.px(), v1.py(),
+                                            v2.mass(), v2.px(), v2.py(), kx, ky,
+                                            m_inv1, m_inv2);
 }
 
 string show(const Particles &ps) {

@@ -103,6 +103,10 @@ double deltaPhi(const Particle &p1, const Particle &p2);
 
 double deltaR(const Particle &p1, const Particle &p2);
 
+double mT2(const Particle &p1, const Particle &p2, const double kx,
+           const double ky, const double m_inv1, const double m_inv2,
+           bool print_copyright = true);
+
 using Particles = std::vector<Particle>;
 
 std::string show(const Particles &ps);
