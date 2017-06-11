@@ -74,6 +74,7 @@ protected:
 
 public:
     Visible() {}
+
     Visible(const colevent::Pt &pt, const colevent::Eta &eta,
             const colevent::Phi &phi, const colevent::Mass &m)
         : Particle{pt, phi},
@@ -82,6 +83,7 @@ public:
           pz_{pt.value * std::sinh(eta.value)} {
         set_energy(m.value);
     }
+
     Visible(const colevent::Energy &e, const colevent::Px &px,
             const colevent::Py &py, const colevent::Pz &pz)
         : Particle{colevent::Pt{px, py}, colevent::Phi{px, py}},
@@ -92,6 +94,7 @@ public:
         colevent::FourMomentum p{e, px, py, pz};
         m_ = p.mass();
     }
+
     Visible(const colevent::Pt &pt, const colevent::Eta &eta,
             const colevent::Phi &phi, const colevent::Mass &m, const int &ntrk)
         : Particle{pt, phi},
@@ -101,6 +104,7 @@ public:
         set_energy(m.value);
         set_charge(ntrk);
     }
+
     virtual ~Visible() {}
 
     double eta() const { return eta_; }
@@ -166,7 +170,7 @@ protected:
     }
 
 public:
-    Muon() {}
+    Muon() : ptiso_(0.0), etrat_(0.0) {}
     Muon(const colevent::Pt &pt, const colevent::Eta &eta,
          const colevent::Phi &phi, const colevent::Mass &m, const int ntrk,
          const double hadem)
@@ -190,10 +194,12 @@ private:
 
 protected:
     void set_prong(int ntrk) {
-        if (ntrk < 2) {
+        if (ntrk > 0 && ntrk < 2) {
             prong_ = TauProng::OneProng;
-        } else {
+        } else if (ntrk < 4) {
             prong_ = TauProng::ThreeProng;
+        } else {
+            prong_ = TauProng::Unknown;
         }
     }
 
@@ -230,22 +236,28 @@ public:
 
 class Bjet : public Jet {
 public:
-    enum class BTag { Loose, Tight };
+    enum class BTag : int { Loose = 1, Tight = 2, Unknown = 0 };
 
 private:
-    BTag btag_ = BTag::Loose;
+    BTag btag_;
 
 public:
-    Bjet() {}
+    Bjet() : btag_(BTag::Unknown) {}
     Bjet(const colevent::Pt &pt, const colevent::Eta &eta,
          const colevent::Phi &phi, const colevent::Mass &m, const int ntrk,
          const int btag)
         : Jet(pt, eta, phi, m, ntrk) {
-        btag < 1.5 ? btag_ = BTag::Loose : btag_ = BTag::Tight;
+        if (btag > 0 && btag < 1.5) {
+            btag_ = BTag::Loose;
+        } else if (btag < 2.5) {
+            btag_ = BTag::Tight;
+        } else {
+            btag_ = BTag::Unknown;
+        }
     }
     ~Bjet() {}
 
-    int btag() const { return btag_ == BTag::Loose ? 1 : 2; }
+    int btag() const { return static_cast<int>(btag_); }
 
     std::string show() const;
 };
