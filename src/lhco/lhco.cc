@@ -22,40 +22,40 @@ int numOfParticles(const Pt &pt, const Eta &eta, const std::vector<T> &ps) {
     return count;
 }
 
-int numPhoton(const Event &ev) { return ev.photon().size(); }
+int numPhoton(const Event &ev) { return ev.photons().size(); }
 
 int numPhoton(const Pt &pt, const Eta &eta, const Event &ev) {
-    return numOfParticles(pt, eta, ev.photon());
+    return numOfParticles(pt, eta, ev.photons());
 }
 
-int numElectron(const Event &ev) { return ev.electron().size(); }
+int numElectron(const Event &ev) { return ev.electrons().size(); }
 
 int numElectron(const Pt &pt, const Eta &eta, const Event &ev) {
-    return numOfParticles(pt, eta, ev.electron());
+    return numOfParticles(pt, eta, ev.electrons());
 }
 
-int numMuon(const Event &ev) { return ev.muon().size(); }
+int numMuon(const Event &ev) { return ev.muons().size(); }
 
 int numMuon(const Pt &pt, const Eta &eta, const Event &ev) {
-    return numOfParticles(pt, eta, ev.muon());
+    return numOfParticles(pt, eta, ev.muons());
 }
 
-int numTau(const Event &ev) { return ev.tau().size(); }
+int numTau(const Event &ev) { return ev.taus().size(); }
 
 int numTau(const Pt &pt, const Eta &eta, const Event &ev) {
-    return numOfParticles(pt, eta, ev.tau());
+    return numOfParticles(pt, eta, ev.taus());
 }
 
-int numNormalJet(const Event &ev) { return ev.jet().size(); }
+int numNormalJet(const Event &ev) { return ev.jets().size(); }
 
 int numNormalJet(const Pt &pt, const Eta &eta, const Event &ev) {
-    return numOfParticles(pt, eta, ev.jet());
+    return numOfParticles(pt, eta, ev.jets());
 }
 
-int numBjet(const Event &ev) { return ev.bjet().size(); }
+int numBjet(const Event &ev) { return ev.bjets().size(); }
 
 int numBjet(const Pt &pt, const Eta &eta, const Event &ev) {
-    return numOfParticles(pt, eta, ev.bjet());
+    return numOfParticles(pt, eta, ev.bjets());
 }
 
 int numAllJet(const Event &ev) { return numNormalJet(ev) + numBjet(ev); }

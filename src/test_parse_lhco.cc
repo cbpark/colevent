@@ -9,8 +9,8 @@ double invMass(const lhco::Event &lhco) {
     double invmass = 0.0;
     if (numMuon(lhco) == 1 && numBjet(lhco) == 1) {
         lhco::Visibles ps;
-        ps.push_back(lhco.muon().front());
-        ps.push_back(lhco.bjet().front());
+        ps.push_back(lhco.muons().front());
+        ps.push_back(lhco.bjets().front());
         invmass = invariantMass(ps);
     }
     return invmass;
