@@ -19,6 +19,8 @@ struct Header {
     friend std::ostream &operator<<(std::ostream &os, const Header &h);
 };
 
+inline std::string show(const Header &h) { return h.show(); }
+
 struct Object {
     int typ = 0;
     double eta = 0.0;
@@ -45,6 +47,8 @@ struct Object {
     friend std::istream &operator>>(std::istream &is, Object &obj);
     friend std::ostream &operator<<(std::ostream &os, const Object &obj);
 };
+
+inline std::string show(const Object &obj) { return obj.show(); }
 
 using Objects = std::vector<Object>;
 }  // namespace lhco

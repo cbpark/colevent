@@ -37,6 +37,8 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const RawEvent &ev);
 };
 
+inline std::string show(const RawEvent &ev) { return ev.show(); }
+
 class Event {
 private:
     EventStatus status_;
@@ -115,6 +117,8 @@ public:
 
     std::string show() const;
 };
+
+inline std::string show(const Event &ev) { return ev.show(); }
 }  // namespace lhco
 
 #endif  // COLEVENT_SRC_LHCO_EVENT_H_

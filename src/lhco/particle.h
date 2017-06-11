@@ -33,6 +33,8 @@ public:
     virtual std::string show() const = 0;
 };
 
+inline std::string show(const Particle &p) { return p.show(); }
+
 struct Met : public Particle {
     Met() {}
     Met(const colevent::Pt &pt, const colevent::Phi &phi) : Particle(pt, phi) {}
@@ -181,7 +183,7 @@ public:
 
 class Tau : public Visible {
 public:
-    enum class TauProng { OneProng, ThreeProng };
+    enum class TauProng : int { OneProng = 1, ThreeProng = 3 };
 
 private:
     TauProng prong_;
@@ -215,7 +217,7 @@ private:
     int num_track_;
 
 public:
-    Jet() {}
+    Jet() : num_track_(0) {}
     Jet(const colevent::Pt &pt, const colevent::Eta &eta,
         const colevent::Phi &phi, const colevent::Mass &m, const int ntrk)
         : Visible(pt, eta, phi, m), num_track_(ntrk) {}
