@@ -44,13 +44,15 @@ int main(int, char *argv[]) {
 #include <iostream>
 #include "lhco/lhco.h"
 
+using std::cout;
+
 int main(int, char *argv[]) {
     std::ifstream fin(argv[1]);
     auto event = lhco::parseEvent(&fin);
     for (int ieve = 1; !event.done(); event = lhco::parseEvent(&fin), ++ieve) {
-        std::cout << "-- event : " << ieve << '\n';
-        std::cout << event.show() << '\n'
-                  << "missing energy = " << lhco::missingET(event) << '\n';
+        cout << "-- event : " << ieve << '\n';
+        for (const auto &j : event.jets()) { cout << lhco::show(j) << '\n'; }
+        cout << "missing energy = " << lhco::missingET(event) << '\n';
     }
 }
 ```
