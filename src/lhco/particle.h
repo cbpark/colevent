@@ -183,7 +183,7 @@ public:
 
 class Tau : public Visible {
 public:
-    enum class TauProng : int { OneProng = 1, ThreeProng = 3 };
+    enum class TauProng : int { OneProng = 1, ThreeProng = 3, Unknown = 0 };
 
 private:
     TauProng prong_;
@@ -198,7 +198,7 @@ protected:
     }
 
 public:
-    Tau() {}
+    Tau() : prong_(TauProng::Unknown) {}
     Tau(const colevent::Pt &pt, const colevent::Eta &eta,
         const colevent::Phi &phi, const colevent::Mass &m, const int ntrk)
         : Visible(pt, eta, phi, m) {
@@ -207,7 +207,7 @@ public:
     }
     ~Tau() {}
 
-    int prong() const { return prong_ == TauProng::OneProng ? 1 : 3; }
+    int prong() const { return static_cast<int>(prong_); }
 
     std::string show() const;
 };
