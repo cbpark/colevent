@@ -1,12 +1,17 @@
 /* Copyright (c) 2014-2015, 2017, Chan Beom Park <cbpark@gmail.com> */
 
 #include "lhef/particle.h"
+#include <initializer_list>
 #include <iomanip>
 #include <iostream>
+#include <iterator>
 #include <numeric>
 #include <string>
 #include "kinematics.h"
 #include "lester_mt2_bisect.h"
+#if DEBUG
+#include <iostream>
+#endif
 
 using std::string;
 using std::to_string;
@@ -99,6 +104,8 @@ double mT2(const Particle &p1, const Particle &p2, const double kx,
 }
 
 string show(const Particles &ps) {
+    if (ps.empty()) { return "[]"; }
+
     string ps_str = "[";
     for (const auto &p : ps) { ps_str += show(p) + ","; }
     ps_str.pop_back();
@@ -148,23 +155,14 @@ Particles collisionProducts(const Particles &ps) {
     return selectBy(pred, ps);
 }
 
-FourMomentum pSum(const Particles &ps) {
-    Particle p{sum(ps)};
-    return momentum(p);
-}
-
-double invariantMass(const Particles &ps) {
-    FourMomentum v{pSum(ps)};
-    return v.mass();
-}
-
-double sqrtSOfInits(const Particles &ps) {
-    const Particles init{initialStates(ps)};
-    return invariantMass(init);
-}
-
-double transverseMomentum(const Particles &ps) {
-    FourMomentum v{pSum(ps)};
-    return v.pt();
+double invariantMass(const std::initializer_list<Particles> &pss) {
+    Particles ps;
+    ps.reserve(pss.size());
+    std::transform(pss.begin(), pss.end(), std::back_inserter(ps),
+                   [](const Particles &ps_) { return sum(ps_); });
+#if DEBUG
+    std::cout << "invariantMass: " << show(ps) << '\n';
+#endif
+    return invariantMass(ps);
 }
 }  // namespace lhef

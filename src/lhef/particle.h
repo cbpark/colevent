@@ -7,6 +7,7 @@
 #include <array>
 #include <cmath>
 #include <functional>
+#include <initializer_list>
 #include <iostream>
 #include <string>
 #include <utility>
@@ -141,17 +142,31 @@ Particles finalStates(const Particles &ps);
 
 Particles collisionProducts(const Particles &ps);
 
-colevent::FourMomentum pSum(const Particles &ps);
+inline colevent::FourMomentum pSum(const Particles &ps) {
+    Particle p{sum(ps)};
+    return momentum(p);
+}
 
-double invariantMass(const Particles &ps);
+inline double invariantMass(const Particles &ps) {
+    colevent::FourMomentum v{pSum(ps)};
+    return v.mass();
+}
+
+double invariantMass(const std::initializer_list<Particles> &pss);
 
 inline double invariantMass(const Particle &p) { return p.mass(); }
 
-double transverseMomentum(const Particles &ps);
+inline double transverseMomentum(const Particles &ps) {
+    colevent::FourMomentum v{pSum(ps)};
+    return v.pt();
+}
 
 inline double transverseMomentum(const Particle &p) { return p.pt(); }
 
-double sqrtSOfInits(const Particles &ps);
+inline double sqrtSOfInits(const Particles &ps) {
+    Particles init{initialStates(ps)};
+    return invariantMass(init);
+}
 }  // namespace lhef
 
 #endif  // COLEVENT_SRC_LHEF_PARTICLE_H_
