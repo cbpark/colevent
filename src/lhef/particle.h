@@ -9,6 +9,7 @@
 #include <functional>
 #include <initializer_list>
 #include <iostream>
+#include <numeric>
 #include <string>
 #include <utility>
 #include <vector>
@@ -118,7 +119,23 @@ inline void transformParticles(
     std::for_each(ps.cbegin(), ps.cend(), func);
 }
 
-Particle sum(const Particles &ps);
+template <template <typename, typename...> class Container>
+Particle sum(const Container<Particle> &ps) {
+    Particle sum = std::accumulate(
+        ps.begin(), ps.end(), Particle{colevent::Energy(0), colevent::Px(0),
+                                       colevent::Py(0), colevent::Pz(0)},
+        [](const typename Container<Particle>::value_type &p1,
+           const typename Container<Particle>::value_type &p2) {
+            return p1 + p2;
+        });
+    return sum;
+}
+
+inline Particle sum(const Particles &ps) { return sum<std::vector>(ps); }
+
+inline Particle sum(const std::initializer_list<Particle> &ps) {
+    return sum<std::initializer_list>(ps);
+}
 
 inline Particles selectBy(
     std::function<bool(const Particles::value_type &)> pred,

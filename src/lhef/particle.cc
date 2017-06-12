@@ -5,7 +5,6 @@
 #include <iomanip>
 #include <iostream>
 #include <iterator>
-#include <numeric>
 #include <string>
 #include "kinematics.h"
 #include "lester_mt2_bisect.h"
@@ -111,15 +110,6 @@ string show(const Particles &ps) {
     ps_str.pop_back();
     ps_str += "]";
     return ps_str;
-}
-
-Particle sum(const Particles &ps) {
-    Particle sum = std::accumulate(
-        ps.cbegin(), ps.cend(), Particle{Energy(0), Px(0), Py(0), Pz(0)},
-        [](const Particles::value_type &p1, const Particles::value_type &p2) {
-            return p1 + p2;
-        });
-    return sum;
 }
 
 Particles selectByID(const ParticleID &pid, const Particles &ps) {
