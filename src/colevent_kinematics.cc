@@ -1,10 +1,9 @@
 /* Copyright (c) 2014-2015, 2017, Chan Beom Park <cbpark@gmail.com> */
 
-#include "kinematics.h"
+#include "colevent_kinematics.h"
 #include <cmath>
 #include <string>
-#include "constants.h"
-
+#include "colevent_constants.h"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif  // HAVE_CONFIG_H

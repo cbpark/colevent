@@ -145,9 +145,9 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 @USE_ROOT_TRUE@libcolevent_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
 am__dirstamp = $(am__leading_dot)dirstamp
-am_libcolevent_la_OBJECTS = kinematics.lo lhef/event.lo lhef/lhef.lo \
-	lhef/parser.lo lhef/particle.lo lhco/event.lo lhco/lhco.lo \
-	lhco/object.lo lhco/parser.lo lhco/particle.lo
+am_libcolevent_la_OBJECTS = colevent_kinematics.lo lhef/event.lo \
+	lhef/lhef.lo lhef/parser.lo lhef/particle.lo lhco/event.lo \
+	lhco/lhco.lo lhco/object.lo lhco/parser.lo lhco/particle.lo
 libcolevent_la_OBJECTS = $(am_libcolevent_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -380,13 +380,13 @@ top_srcdir = @top_srcdir@
 AM_CXXFLAGS = -std=c++11 $(am__append_1) $(am__append_2)
 lib_LTLIBRARIES = libcolevent.la
 libcolevent_la_SOURCES = \
-	kinematics.cc \
+	colevent_kinematics.cc \
 	lhef/event.cc lhef/lhef.cc lhef/parser.cc lhef/particle.cc \
 	lhco/event.cc lhco/lhco.cc lhco/object.cc lhco/parser.cc lhco/particle.cc
 
 @USE_ROOT_TRUE@libcolevent_la_LIBADD = -L$(ROOTLIBDIR) $(ROOTLIBS)
 nobase_pkginclude_HEADERS = \
-	constants.h kinematics.h \
+	colevent_constants.h colevent_kinematics.h \
 	lhef/event.h lhef/lhef.h lhef/parser.h lhef/particle.h lhef/pid.h \
 	lhco/event.h lhco/lhco.h lhco/object.h lhco/parser.h lhco/particle.h
 
@@ -567,7 +567,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kinematics.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/colevent_kinematics.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_parse_lhco.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_parse_lhef.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_render_lhco.Po@am__quote@

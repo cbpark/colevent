@@ -13,7 +13,7 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include "kinematics.h"
+#include "colevent_kinematics.h"
 #include "lhef/pid.h"
 
 namespace lhef {

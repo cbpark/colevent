@@ -3,7 +3,7 @@
 #include "lhco/lhco.h"
 #include <cmath>
 #include <vector>
-#include "kinematics.h"
+#include "colevent_kinematics.h"
 
 using colevent::Energy;
 using colevent::Px;

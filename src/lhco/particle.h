@@ -6,7 +6,7 @@
 #include <cmath>
 #include <string>
 #include <vector>
-#include "kinematics.h"
+#include "colevent_kinematics.h"
 
 namespace lhco {
 class Particle {

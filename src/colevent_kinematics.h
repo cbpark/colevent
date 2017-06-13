@@ -1,7 +1,7 @@
 /* Copyright (c) 2014-2015, 2017, Chan Beom Park <cbpark@gmail.com> */
 
-#ifndef COLEVENT_SRC_KINEMATICS_H_
-#define COLEVENT_SRC_KINEMATICS_H_
+#ifndef COLEVENT_SRC_COLEVENT_KINEMATICS_H_
+#define COLEVENT_SRC_COLEVENT_KINEMATICS_H_
 
 #include <cmath>
 #include <string>
@@ -135,4 +135,4 @@ double deltaPhi(const FourMomentum &p1, const FourMomentum &p2);
 double deltaR(const FourMomentum &p1, const FourMomentum &p2);
 }  // namespace colevent
 
-#endif  // COLEVENT_SRC_KINEMATICS_H_
+#endif  // COLEVENT_SRC_COLEVENT_KINEMATICS_H_

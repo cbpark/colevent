@@ -8,7 +8,7 @@ endif
 
 lib_LTLIBRARIES        = libcolevent.la
 libcolevent_la_SOURCES = \
-	kinematics.cc \
+	colevent_kinematics.cc \
 	lhef/event.cc lhef/lhef.cc lhef/parser.cc lhef/particle.cc \
 	lhco/event.cc lhco/lhco.cc lhco/object.cc lhco/parser.cc lhco/particle.cc
 if USE_ROOT
@@ -16,7 +16,7 @@ libcolevent_la_LIBADD  = -L$(ROOTLIBDIR) $(ROOTLIBS)
 endif
 
 nobase_pkginclude_HEADERS = \
-	constants.h kinematics.h \
+	colevent_constants.h colevent_kinematics.h \
 	lhef/event.h lhef/lhef.h lhef/parser.h lhef/particle.h lhef/pid.h \
 	lhco/event.h lhco/lhco.h lhco/object.h lhco/parser.h lhco/particle.h
 

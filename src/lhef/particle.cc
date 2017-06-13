@@ -6,7 +6,7 @@
 #include <iostream>
 #include <iterator>
 #include <string>
-#include "kinematics.h"
+#include "colevent_kinematics.h"
 #include "lester_mt2_bisect.h"
 #if DEBUG
 #include <iostream>

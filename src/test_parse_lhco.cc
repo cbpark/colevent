@@ -2,7 +2,7 @@
 
 #include <fstream>
 #include <iostream>
-#include "kinematics.h"
+#include "colevent_kinematics.h"
 #include "lhco/lhco.h"
 
 double invMass(const lhco::Event &lhco) {
