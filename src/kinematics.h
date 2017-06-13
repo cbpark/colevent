@@ -11,24 +11,28 @@ struct Px {
     double value;
     Px() : value(0.0) {}
     explicit Px(double v) : value(v) {}
+    Px operator-() const { return Px{-value}; }
 };
 
 struct Py {
     double value;
     Py() : value(0.0) {}
     explicit Py(double v) : value(v) {}
+    Py operator-() const { return Py{-value}; }
 };
 
 struct Pz {
     double value;
     Pz() : value(0.0) {}
     explicit Pz(double v) : value(v) {}
+    Pz operator-() const { return Pz{-value}; }
 };
 
 struct Energy {
     double value;
     Energy() : value(0.0) {}
     explicit Energy(double v) : value(v) {}
+    Energy operator-() const { return Energy{-value}; }
 };
 
 double cosTheta(const Px &px, const Py &py, const Pz &pz);
@@ -55,6 +59,7 @@ struct Phi {
     Phi() : value(0.0) {}
     explicit Phi(double v) : value(v) {}
     Phi(const Px &px, const Py &py) : value(std::atan2(py.value, px.value)) {}
+    Phi operator-() const { return Phi{-value}; }
 };
 
 struct Mass {
@@ -65,20 +70,20 @@ struct Mass {
 
 class FourMomentum {
 private:
+    Energy e_;
     Px px_;
     Py py_;
     Pz pz_;
-    Energy e_;
 
 public:
-    FourMomentum() : px_(0), py_(0), pz_(0), e_(0) {}
+    FourMomentum() : e_(0), px_(0), py_(0), pz_(0) {}
     FourMomentum(const Energy &e, const Px &px, const Py &py, const Pz &pz)
-        : px_(px), py_(py), pz_(pz), e_(e) {}
+        : e_(e), px_(px), py_(py), pz_(pz) {}
 
+    double energy() const { return e_.value; }
     double px() const { return px_.value; }
     double py() const { return py_.value; }
     double pz() const { return pz_.value; }
-    double energy() const { return e_.value; }
 
     double pt() const { return std::hypot(px(), py()); }
     double phi() const {
@@ -90,6 +95,36 @@ public:
         double m2 = e_.value * e_.value - px_.value * px_.value -
                     py_.value * py_.value - pz_.value * pz_.value;
         return m2 < 0 ? -std::sqrt(-m2) : std::sqrt(m2);
+    }
+
+    FourMomentum operator-() const { return {-e_, -px_, -py_, -pz_}; }
+
+    FourMomentum &operator+=(const FourMomentum &rhs) {
+        Energy e(e_.value + rhs.energy());
+        Px px(px_.value + rhs.px());
+        Py py(py_.value + rhs.py());
+        Pz pz(pz_.value + rhs.pz());
+        *this = FourMomentum{e, px, py, pz};
+        return *this;
+    }
+
+    FourMomentum &operator-=(const FourMomentum &rhs) {
+        Energy e(e_.value - rhs.energy());
+        Px px(px_.value - rhs.px());
+        Py py(py_.value - rhs.py());
+        Pz pz(pz_.value - rhs.pz());
+        *this = FourMomentum{e, px, py, pz};
+        return *this;
+    }
+
+    friend FourMomentum operator+(FourMomentum lhs, const FourMomentum &rhs) {
+        lhs += rhs;
+        return lhs;
+    }
+
+    friend FourMomentum operator-(FourMomentum lhs, const FourMomentum &rhs) {
+        lhs -= rhs;
+        return lhs;
     }
 };
 
