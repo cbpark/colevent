@@ -12,6 +12,7 @@
 .libs
 .dirstamp
 *.pc
+.lineno
 autoscan.log
 autom4te.cache
 config.log
