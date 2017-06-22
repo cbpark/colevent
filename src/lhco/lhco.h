@@ -31,6 +31,8 @@ int numMuon(const Event &ev);
 
 int numMuon(const colevent::Pt &pt, const colevent::Eta &eta, const Event &ev);
 
+int numLeptonIso(const Event &ev);
+
 int numTau(const Event &ev);
 
 int numTau(const colevent::Pt &pt, const colevent::Eta &eta, const Event &ev);

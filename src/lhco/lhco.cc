@@ -40,6 +40,10 @@ int numMuon(const Pt &pt, const Eta &eta, const Event &ev) {
     return numOfParticles(pt, eta, ev.muons());
 }
 
+int numLeptonIso(const Event &ev) {
+    return numElectron(ev) + numMuon(ev);
+}
+
 int numTau(const Event &ev) { return ev.taus().size(); }
 
 int numTau(const Pt &pt, const Eta &eta, const Event &ev) {
