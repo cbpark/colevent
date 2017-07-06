@@ -1,6 +1,6 @@
 # colevent
 
-Tools for the [Les Houches Event File](http://home.thep.lu.se/~leif/LHEF/) (LHEF) and LHC Olympics (LHCO) data analyses using C++. If you want to use Haskell, see [lhef-tools](https://github.com/cbpark/lhef-tools) and [lhco-tools](https://github.com/cbpark/lhco-tools).
+Tools for the [Les Houches Event File](http://home.thep.lu.se/~leif/LHEF/) (LHEF) and LHC Olympics (LHCO) data analyses using C++. If you want to use Haskell, see [lhevent](https://github.com/cbpark/lhevent).
 
 ### Prerequisite
 
