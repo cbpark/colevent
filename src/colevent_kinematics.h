@@ -3,8 +3,10 @@
 #ifndef COLEVENT_SRC_COLEVENT_KINEMATICS_H_
 #define COLEVENT_SRC_COLEVENT_KINEMATICS_H_
 
+#include <array>
 #include <cmath>
 #include <string>
+#include "colevent_constants.h"
 
 namespace colevent {
 struct Px {
@@ -91,9 +93,12 @@ public:
                                                                  px_.value);
     }
     double eta() const { return pseudoRapidity(px_, py_, pz_); }
+    double mass2() const {
+        return e_.value * e_.value - px_.value * px_.value -
+               py_.value * py_.value - pz_.value * pz_.value;
+    }
     double mass() const {
-        double m2 = e_.value * e_.value - px_.value * px_.value -
-                    py_.value * py_.value - pz_.value * pz_.value;
+        double m2 = mass2();
         return m2 < 0 ? -std::sqrt(-m2) : std::sqrt(m2);
     }
 
@@ -133,6 +138,51 @@ std::string show(const FourMomentum &p);
 double deltaPhi(const FourMomentum &p1, const FourMomentum &p2);
 
 double deltaR(const FourMomentum &p1, const FourMomentum &p2);
+
+inline double lambda12(const double x, const double y, const double z) {
+    double lambda = x * x + y * y + z * z - 2 * x * y - 2 * y * z - 2 * z * x;
+    return lambda < 0 ? -std::sqrt(-lambda) : std::sqrt(lambda);
+}
+
+class CM22 {
+private:
+    double m_in1_sq_ = 0, m_in2_sq_ = 0;
+    double m_out1_sq_ = 0, m_out2_sq_ = 0;
+    double s_ = 0;
+    double costh_ = -2, sinth_ = -2;
+    double phi_ = 0;
+    double p_in_ = 0, p_out_ = 0;
+
+public:
+    CM22(const std::array<double, 4> &m, const double s, const double r1,
+         const double r2)
+        : m_in1_sq_(m[0] * m[0]),
+          m_in2_sq_(m[1] * m[1]),
+          m_out1_sq_(m[2] * m[2]),
+          m_out2_sq_(m[3] * m[3]),
+          s_(s),
+          costh_(costh(r1)),
+          sinth_(std::sqrt(1.0 - costh_ * costh_)),
+          phi_(TWOPI * r2) {
+        p_init();
+    }
+
+    double costh() const { return costh_; }
+    double phi() const { return phi_; }
+
+    double s() const { return s_; }
+    double t() const { return (p1() - k1()).mass2(); }
+    double u() const { return (p1() - k2()).mass2(); }
+
+    FourMomentum p1() const;
+    FourMomentum p2() const;
+    FourMomentum k1() const;
+    FourMomentum k2() const;
+
+private:
+    double costh(const double r) { return -1.0 + 2.0 * r; }
+    void p_init();
+};
 }  // namespace colevent
 
 #endif  // COLEVENT_SRC_COLEVENT_KINEMATICS_H_

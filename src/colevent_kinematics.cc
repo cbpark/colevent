@@ -91,5 +91,32 @@ double deltaR(const FourMomentum &p1, const FourMomentum &p2) {
     return std::hypot(deta, dphi);
 }
 
+void CM22::p_init() {
+    p_in_ = lambda12(s_, m_in1_sq_, m_in2_sq_);
+    p_out_ = lambda12(s_, m_out1_sq_, m_out2_sq_);
+}
+
+FourMomentum CM22::p1() const {
+    double e = (s_ + m_in1_sq_ - m_in2_sq_) / (2.0 * std::sqrt(s_));
+    return {Energy(e), Px(0.0), Py(0.0), Pz(p_in_)};
+}
+
+FourMomentum CM22::p2() const {
+    double e = (s_ - m_in1_sq_ + m_in2_sq_) / (2.0 * std::sqrt(s_));
+    return {Energy(e), Px(0.0), Py(0.0), Pz(-p_in_)};
+}
+
+FourMomentum CM22::k1() const {
+    double e = (s_ + m_out1_sq_ - m_out2_sq_) / (2.0 * std::sqrt(s_));
+    return {Energy(e), Px(p_out_ * sinth_ * std::cos(phi_)),
+            Py(p_out_ * sinth_ * std::sin(phi_)), Pz(p_out_ * costh_)};
+}
+
+FourMomentum CM22::k2() const {
+    double e = (s_ - m_out1_sq_ + m_out2_sq_) / (2.0 * std::sqrt(s_));
+    return {Energy(e), Px(-p_out_ * sinth_ * std::cos(phi_)),
+            Py(-p_out_ * sinth_ * std::sin(phi_)), Pz(-p_out_ * costh_)};
+}
+
 #endif  // HAVE_ROOT
 }  // namespace colevent
