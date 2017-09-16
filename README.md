@@ -60,13 +60,15 @@ int main(int, char *argv[]) {
 See also `test_parser_@(lhco|lhef).cc` and `test_render_@(lhco|lhef).cc` in [`src`](src).
 
 
-Setting flags might be necessary for building your programs. For example,
+Setting flags might be necessary for building your programs. For example, you can add
 
 ``` makefile
-COLEVENT := /path/colevent
+COLEVENT := /path/to/colevent
 CXXFLAGS += -I$(COLEVENT)/include/colevent
 LDFLAGS  += -L$(COLEVENT)/lib -lcolevent
 ```
+
+to the Makefile.
 
 If it has been installed to the system path, `pkg-config` will provide the proper flags:
 
