@@ -17,6 +17,14 @@ make install
 
 If ROOT is not located in the system path, it can be set by `./configure --with-rootsys=path/of/root`.
 
+* [Nix](https://nixos.org/nix/) users can build this package by running
+
+```
+nix-build
+```
+
+See [default.nix](./default.nix).
+
 ## Usage
 
 * LHEF
