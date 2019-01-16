@@ -1,4 +1,4 @@
-/* Copyright (c) 2014-2015, 2017, Chan Beom Park <cbpark@gmail.com> */
+/* Copyright (c) 2014-2015, 2017, 2019 Chan Beom Park <cbpark@gmail.com> */
 
 #include "colevent_kinematics.h"
 #include <cmath>
