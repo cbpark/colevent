@@ -141,7 +141,7 @@ double deltaR(const FourMomentum &p1, const FourMomentum &p2);
 
 inline double lambda12(const double x, const double y, const double z) {
     double lambda = x * x + y * y + z * z - 2 * x * y - 2 * y * z - 2 * z * x;
-    return lambda < 0 ? -std::sqrt(-lambda) : std::sqrt(lambda);
+    return lambda < 0 ? std::sqrt(-lambda) : std::sqrt(lambda);
 }
 
 class CM22 {
