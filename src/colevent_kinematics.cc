@@ -92,8 +92,9 @@ double deltaR(const FourMomentum &p1, const FourMomentum &p2) {
 }
 
 void CM22::p_init() {
-    p_in_ = lambda12(s_, m_in1_sq_, m_in2_sq_);
-    p_out_ = lambda12(s_, m_out1_sq_, m_out2_sq_);
+    const double d = 2.0 * std::sqrt(s_);
+    p_in_ = lambda12(s_, m_in1_sq_, m_in2_sq_) / d;
+    p_out_ = lambda12(s_, m_out1_sq_, m_out2_sq_) / d;
 }
 
 FourMomentum CM22::p1() const {
