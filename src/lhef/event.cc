@@ -78,7 +78,7 @@ std::istream &operator>>(std::istream &is, EventInfo &evinfo) {
 
 std::ostream &operator<<(std::ostream &os, const EventInfo &evinfo) {
     auto ss = os.precision();
-    os << setw(2) << evinfo.nup << setw(4) << evinfo.idprup
+    os << setw(6) << evinfo.nup << setw(6) << evinfo.idprup
        << std::setprecision(7) << std::scientific << std::uppercase << setw(15)
        << evinfo.xwgtup << setw(15) << evinfo.scalup << setw(15)
        << evinfo.aqedup << setw(15) << evinfo.aqcdup;
