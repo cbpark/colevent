@@ -9,7 +9,7 @@ AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([-Wall foreign subdir-objects])
 
 AC_PROG_CXX
-AX_CXX_COMPILE_STDCXX(11,noext,mandatory)
+AX_CXX_COMPILE_STDCXX(17,noext,mandatory)
 AC_PROG_AWK
 AC_PROG_CC
 AC_PROG_CPP

@@ -1,4 +1,4 @@
-AM_CXXFLAGS = -std=c++11
+AM_CXXFLAGS = -std=c++17
 if DEBUG
 AM_CXXFLAGS += -DDEBUG -O0 -Wall -Wextra -pedantic
 endif
