@@ -34,3 +34,4 @@ test_parse_lhco
 test_render_lhco
 test_parse_lhef
 test_render_lhef
+.ccls-cache

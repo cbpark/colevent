@@ -59,6 +59,7 @@ public:
 
     int pid() const { return idup_; }
     int status() const { return istup_; }
+    void set_status(int s) { istup_ = s; }
     std::pair<int, int> mother() const { return mothup_; }
     double px() const { return pup_[0]; }
     double py() const { return pup_[1]; }
@@ -67,6 +68,7 @@ public:
     double mass() const { return pup_[4]; }
     double pt() const { return std::hypot(pup_[0], pup_[1]); }
     double decayLength() const { return vtimup_; }
+    double spin() const { return spinup_; }
 
     bool is(const ParticleID &pid) const {
         return std::find(pid.cbegin(), pid.cend(), idup_) != pid.cend();
@@ -121,13 +123,14 @@ inline void transformParticles(
 
 template <template <typename, typename...> class Container>
 Particle sum(const Container<Particle> &ps) {
-    Particle sum = std::accumulate(
-        ps.begin(), ps.end(), Particle{colevent::Energy(0), colevent::Px(0),
-                                       colevent::Py(0), colevent::Pz(0)},
-        [](const typename Container<Particle>::value_type &p1,
-           const typename Container<Particle>::value_type &p2) {
-            return p1 + p2;
-        });
+    Particle sum =
+        std::accumulate(ps.begin(), ps.end(),
+                        Particle{colevent::Energy(0), colevent::Px(0),
+                                 colevent::Py(0), colevent::Pz(0)},
+                        [](const typename Container<Particle>::value_type &p1,
+                           const typename Container<Particle>::value_type &p2) {
+                            return p1 + p2;
+                        });
     return sum;
 }
 
